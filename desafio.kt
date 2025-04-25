@@ -1,21 +1,42 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
-
 enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
 
-class Usuario
+data class Usuario(val nome: String)
 
 data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
 
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>, val nivel: Nivel) {
 
     val inscritos = mutableListOf<Usuario>()
     
     fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+        
+       inscritos.add(usuario)
+       println("O usuário ${usuario.nome} foi matriculado")
+       
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    val formacao = Formacao(
+        "Computacao",
+        listOf<ConteudoEducacional>(ConteudoEducacional("MATEMATICA"),ConteudoEducacional("PORTUGUES")),
+        Nivel.DIFICIL
+    )
+    
+    val usuario = Usuario("Luana")
+    
+    formacao.matricular(usuario)
+    showInformation(formacao, usuario)
+    
+}
+
+fun showInformation(formacao: Formacao, usuario: Usuario){
+    
+    println("O nome da formacao que ${usuario.nome} se cadastrou foi ${formacao.nome}")
+    println("o conteudo que a formação ${formacao.nome} possui:")
+    for(conteudo in formacao.conteudos){
+            println("matéria: ${conteudo.nome}")
+            println("duração: ${conteudo.duracao}")
+    }
+    println("O nível de dificuldade da formação ${formacao.nome}: ${formacao.nivel}")
 }
